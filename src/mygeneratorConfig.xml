@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+<!-- 去找加载数据库驱动的jar包 -->
+<!-- location：使用eclipse用绝对路径 -->
+  <classPathEntry location="e:/workspace/demo123/src/mysql-connector-java-5.1.26-bin.jar" />
+	<!-- 配置代码生成策略 -->
+	<!-- targetRuntime="MyBatis3Simple" 只生成基本的crud的操作 -->
+  <context id="DB2Tables" targetRuntime="MyBatis3Simple">
+  <!-- 注释生成策略 -->
+  <commentGenerator>
+  <!-- suppressAllComments:阻止生成注释 ，默认为false
+  suppressDate:阻止生成的注释 时间戳，默认为false -->
+  <!-- 阻止注释的生成 -->
+  	 <property name="suppressAllComments" value="true"/>
+  <!-- 阻止时间戳的生成 -->
+  	 <property name="suppressDate" value="true"/>
+  </commentGenerator>
+  	<!-- 连接数据库的属性 -->
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+        connectionURL="jdbc:mysql://localhost:3306/demo"
+        userId="root"
+        password="123456">
+    </jdbcConnection>
+<!-- java类型转换策略 -->
+<!-- forceBigDecimals： 是否将数据库中的decimal和numberic转换成 bigdecimal类型 -->
+    <javaTypeResolver >
+      <property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+<!-- domain生成策略 -->                                               <!-- 使用eclipse，使用项目名称/src  -->
+                                                                      <!-- 使用idea，使用main/java  -->
+    <javaModelGenerator targetPackage="cn.ti.demo123.domain" targetProject="main/java">
+      <property name="enableSubPackages" value="true" />
+      <!-- trimStrings：去掉数据库中字段名称的空白 -->
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+<!-- 映射文件的生成策略 -->
+    <sqlMapGenerator targetPackage="cn.ti.demo123.dao.mapper"  targetProject="main/java">
+      <!-- enableSubPackages：是否有子包 -->
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+<!-- mapper接口生成策略 -->
+<!-- type：sql的映射策略  XMLMAPPER使用xml映射文件的方式
+	 ANNOTATEDMAPPER：注解方式
+-->
+    <javaClientGenerator type="XMLMAPPER" targetPackage="cn.ti.demo123.dao"  targetProject="main/java">
+      <property name="enableSubPackages" value="true" />
+    </javaClientGenerator>
+<!-- 表 -->
+<!-- tableName：表名
+domainObjectName：domain类名字 -->
+    <table  tableName="t_news" domainObjectName="news" ></table>
+  </context>
+</generatorConfiguration>

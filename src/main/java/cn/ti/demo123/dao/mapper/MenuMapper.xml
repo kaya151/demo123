@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ti.demo123.dao.MenuMapper">
+  <resultMap id="BaseResultMap" type="cn.ti.demo123.domain.Menu">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="menu_id" jdbcType="BIGINT" property="menuid" />
+    <collection property="children" ofType="cn.ti.demo123.domain.Menu" column="id" select="findMenuByParentId"/>
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from menu
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.ti.demo123.domain.Menu">
+    insert into menu (id, name, url, 
+      menu_id)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{menuid,jdbcType=BIGINT})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.ti.demo123.domain.Menu">
+    update menu
+    set name = #{name,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      menu_id = #{menuid,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, name, url, menu_id
+    from menu
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, name, url,IFNULL(menu_id,0) as menu_id
+    from menu
+  </select>
+
+  <select id="findMenuByParentId" resultMap="BaseResultMap">
+    select id, name, url, menu_id
+    from menu  WHERE menu_id = #{id}
+  </select>
+  <select id="findAllRecursion" resultMap="BaseResultMap">
+        SELECT id, name, url, IFNULL(menu_id,0) as menu_id FROM menu WHERE menu_id ='' or menu_id is NULL
+   </select>
+</mapper>

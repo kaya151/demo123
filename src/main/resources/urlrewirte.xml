@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.2//EN"
+        "http://tuckey.org/res/dtds/urlrewrite3.2.dtd">
+<urlrewrite>
+    <rule>
+        <!--拦截页面以/_开头的数据,作为转发给前端使用-->
+        <!--<from>^/(\w+)/_([\w\d])+\.html$</from>
+        &lt;!&ndash; to: 真实$1.html?的URL &ndash;&gt;
+        <to type="forward">/param=$2</to>-->
+        <from>/page.html</from>
+        <to>/page1</to>
+
+    </rule>
+    <!--<rule>
+        <from>/index.html</from>
+        <to>/index</to>
+    </rule>-->
+    <!--<rule>
+        <from>/</from>
+        <to>/index</to>
+    </rule>-->
+
+</urlrewrite>
